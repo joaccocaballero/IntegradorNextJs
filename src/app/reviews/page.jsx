@@ -1,20 +1,26 @@
 import Link from "next/link";
+import Heading from "@/components/Heading";
+import {getReviews} from "@/lib/reviews";
 
-export default function ReviewsPage() {
+export default async function ReviewsPage() {
+    const reviews = await getReviews()
+
     return (
         <>
-            <h1>Reviews</h1>
-            <ul>
-                <li>
-                    <Link href="/reviews/hollow-knight">
-                        Hollow Knight
-                    </Link>
-                </li>
-                <li>
-                    <Link href="/reviews/stardrew-valley">
-                        Stardrew Valley
-                    </Link>
-                </li>
+            <Heading>Reviews</Heading>
+            <ul className="flex flex-col justify-center items-center sm:flex-row gap-3">
+                {reviews.map((review)=>{
+                    return(
+                        <li key={review.gameName} className="bg-white border rounded shadow w-60 hover:shadow-xl">
+                            <Link href={'/reviews/'+review.gameName} className="hover:underline">
+                                <img src={review.image} alt="gameimg" className="rounded-t " width="640" height="360" />
+                                <h2 className="text-center py-1">
+                                    {review.title}
+                                </h2>
+                            </Link>
+                        </li>
+                    )
+                })}
             </ul>
         </>
     );

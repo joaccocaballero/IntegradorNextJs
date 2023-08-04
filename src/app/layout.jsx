@@ -1,28 +1,19 @@
-import Link from "next/link"
+
 import './globals.css'
+import NavBar from "@/components/NavBar"
 
 export default function RootLayout({children}){
   return(
     <html lang="en">
-      <body>
+      <body className="bg-orange-50 flex flex-col min-h-screen px-5 py-3">
         <header>
-          <ul>
-            <li>
-              <Link href='/'>HOME</Link> 
-            </li>
-            <li>
-              <Link href='/reviews'>REVIEWS</Link>
-            </li>
-            <li>
-              <Link href='/about'>ABOUT</Link>
-            </li>
-          </ul>
+            <NavBar></NavBar>
         </header>
-        <main>
+        <main className="grow py-3">
           {children}
         </main>
-        <footer>
-          Game data and images courtesy of <a href='hhtps://rawg.io/' target="_blank">RAWG</a>
+        <footer className="py-3 text-center text-xs border-t">
+          Game data and images courtesy of <a href='hhtps://rawg.io/' target="_blank" className="text-orange-800 hover:underline">RAWG</a>
         </footer>
       </body>
     </html>

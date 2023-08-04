@@ -1,8 +1,9 @@
+import Heading from "@/components/Heading";
 
 export default function About() {
     return (
         <>
-            <h1>About</h1>
+            <Heading>About</Heading>
             <p>
                 A website created to learn Next.js
             </p>
