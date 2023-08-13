@@ -7,7 +7,7 @@ const url = 'http://localhost:1337/api/reviews?' + qs.stringify({
     fields: ['slug', 'title','body', 'subtitle', 'publishedAt'],
     populate: {image: { fields: ['url'] }},
     sort: ['publishedAt:desc'],
-    pagination: { pageSize: 6}
+    pagination: { pageSize: 6, page: 1}
 }, {
     encodeValuesOnly: true
 })

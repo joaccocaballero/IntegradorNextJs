@@ -2,17 +2,20 @@ import Link from "next/link";
 import Heading from "@/components/Heading";
 import {getReviews} from "@/lib/reviews";
 import Image from "next/image";
+import PaginationBar from "@/components/PaginationBar";
 
 export const metadata = {
     title: 'Reviews'
 }
-
-export default async function ReviewsPage() {
-    const reviews = await getReviews()
+const PAGE_SIZE = 6
+export default async function ReviewsPage({searchParams}) {
+    const page = parsePageParam(searchParams.page)
+    const {reviews, pageCount} = await getReviews(PAGE_SIZE, page)
     return (
         <>
             <Heading>Reviews</Heading>
-            <ul className="flex flex-col justify-center items-center sm:flex-row gap-3">
+            <PaginationBar href={'/reviews'} page={page} pageCount={pageCount}/>
+            <ul className="flex  flex-wrap flex-col justify-center items-center sm:flex-row gap-3">
                 {reviews.map((review)=>{
                     return(
                         <li key={review.gameName} className="bg-white border rounded shadow w-60 hover:shadow-xl">
@@ -28,4 +31,14 @@ export default async function ReviewsPage() {
             </ul>
         </>
     );
+}
+
+function parsePageParam(paramValue){
+    if(paramValue){
+        const page = parseInt(paramValue)
+        if(isFinite(page) && page > 0){
+            return page;
+        }
+    }
+    return 1
 }
