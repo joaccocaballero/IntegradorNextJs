@@ -1,3 +1,4 @@
+import 'server-only'
 import {marked} from 'marked';
 import qs from 'qs'
 
@@ -22,6 +23,20 @@ export async function getReview(slug){
         body: marked(item.attributes.body,{headerIds:false, mangle:false})
     }
 }
+
+export async function searchReviews(query){
+    const { data } = await fetchReviews({
+        fields: ['slug', 'title'],
+        filters: {title: {$containsi: query}},
+        sort: ['title'],
+        pagination: { pageSize: 5},
+    });
+    return data.map(({attributes})=>({
+        slug: attributes.slug,
+        title: attributes.title
+    }))
+}
+
 
 async function fetchReviews(parameters) {
     const url = CMS_URL + '/api/reviews?' + qs.stringify( parameters, {
